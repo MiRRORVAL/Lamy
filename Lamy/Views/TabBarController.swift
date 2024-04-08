@@ -21,17 +21,14 @@ class TabBarController: UITabBarController {
         let navigatoinForSearch = UINavigationController(rootViewController: searchViewController)
         let navigatoinForLibrary = UINavigationController(rootViewController: library)
         
-        
-//        navigatoinForLibrary.navigationItem.title = "Yes"
-        
         navigatoinForSearch.visibleViewController?.title = "Find"
         navigatoinForSearch.tabBarItem.image = .add
         navigatoinForSearch.tabBarItem.title = "Find"
         navigatoinForSearch.navigationBar.prefersLargeTitles = true
         
-        navigatoinForLibrary.visibleViewController?.title = "Bookmark"
+        navigatoinForLibrary.visibleViewController?.title = "Playlists"
         navigatoinForLibrary.tabBarItem.image = .checkmark
-        navigatoinForLibrary.tabBarItem.title = "Bookmarks"
+        navigatoinForLibrary.tabBarItem.title = "Playlists"
         navigatoinForLibrary.navigationBar.prefersLargeTitles = true
         
         

@@ -9,29 +9,44 @@ import UIKit
 
 class SearchViewController: UITableViewController {
 
+    let searchController = UISearchController(searchResultsController: nil)
+    
+    
+    let dataManager = DataManager.shared
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        setupSearchController()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 5
+        return dataManager.musicTracks.count
     }
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        cell.backgroundColor = .blue
-
+        cell.textLabel?.text = "\(dataManager.musicTracks[indexPath.row].name) \n\(dataManager.musicTracks[indexPath.row].artist)"
+        cell.textLabel?.numberOfLines = 2
+        let image = UIImage(systemName: "cube.transparent")
+        cell.imageView?.sizeToFit()
+        cell.imageView?.image = image
         return cell
+    }
+    
+    private func setupSearchController() {
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.searchBar.delegate = self
     }
 
     /*
@@ -79,4 +94,12 @@ class SearchViewController: UITableViewController {
     }
     */
 
+}
+
+extension SearchViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        dataManager.fetchData(for: searchText)
+    }
+    
 }
