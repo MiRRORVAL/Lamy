@@ -10,13 +10,14 @@ import Foundation
 
 struct ReceivedSearchResult: Decodable {
     let resultCount: Int
-    let result: [ReceivedSearchItems]
-
+    let results: [ReceivedSearchItems]
 }
+
 struct ReceivedSearchItems: Decodable {
-    let artistID, collectionID, trackID: Int
-    let artistName, collectionName, trackName: String
-    let previewURL: String
-    let collectionExplicitness, trackExplicitness: String
+    let artistName: String
+    let collectionName: String?
+    let trackID: Int?
+    let trackName: String
     let trackTimeMillis: Int
+    let artworkUrl100: String?
 }

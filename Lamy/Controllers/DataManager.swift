@@ -16,9 +16,9 @@ final class DataManager {
     private var entity = "&entity=song"
     private var limit = "&limit=25"
     
-    var musicTracks: [ReceivedSearchItems]!
+    var musicTracks: [ReceivedSearchItems] = []
     
-    func fetchData(for searchRequest: String) {
+    func fetchData(for searchRequest: String, complitionHandler: @escaping () -> ()) {
         let fullUrl = baseUrl + searchRequest + entity + country
         print(fullUrl)
         AF.request(fullUrl).response { response in
@@ -26,9 +26,16 @@ final class DataManager {
                 print(error.localizedDescription)
             }
             else {
-                guard let result = response.data else { return }
-                let string = String(data: result, encoding: .utf8)
-                print(string as Any)
+                guard let data = response.data else { return }
+                let decoder = JSONDecoder()
+                do {
+                    let dedcodedData = try decoder.decode(ReceivedSearchResult.self, from: data)
+                    print(dedcodedData)
+                    self.musicTracks = dedcodedData.results
+                    complitionHandler()
+                } catch let decodeError {
+                    print(decodeError)
+                }
             }
         }
     }

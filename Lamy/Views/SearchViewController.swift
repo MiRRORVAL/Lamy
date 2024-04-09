@@ -11,7 +11,7 @@ class SearchViewController: UITableViewController {
 
     let searchController = UISearchController(searchResultsController: nil)
     
-    
+    private var timer: Timer?
     let dataManager = DataManager.shared
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,10 +35,9 @@ class SearchViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        cell.textLabel?.text = "\(dataManager.musicTracks[indexPath.row].name) \n\(dataManager.musicTracks[indexPath.row].artist)"
+        cell.textLabel?.text = "\(dataManager.musicTracks[indexPath.row].trackName) \n\(dataManager.musicTracks[indexPath.row].artistName)"
         cell.textLabel?.numberOfLines = 2
         let image = UIImage(systemName: "cube.transparent")
-        cell.imageView?.sizeToFit()
         cell.imageView?.image = image
         return cell
     }
@@ -98,8 +97,12 @@ class SearchViewController: UITableViewController {
 
 extension SearchViewController: UISearchBarDelegate {
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        dataManager.fetchData(for: searchText)
+        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+            timer?.invalidate()
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (_) in
+                self.dataManager.fetchData(for: searchText) {
+                    self.tableView.reloadData()
+                }
+            }
+        }
     }
-    
-}
