@@ -37,8 +37,13 @@ class SearchViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
         cell.textLabel?.text = "\(dataManager.musicTracks[indexPath.row].trackName) \n\(dataManager.musicTracks[indexPath.row].artistName)"
         cell.textLabel?.numberOfLines = 2
-        let image = UIImage(systemName: "cube.transparent")
-        cell.imageView?.image = image
+        if dataManager.musicTracks[indexPath.row].artworkUrl100 == nil {
+            let image = UIImage(systemName: "cube")
+            cell.imageView?.image = image
+        } else {
+            let image = UIImage(systemName: "cube.transparent")
+            cell.imageView?.image = image
+        }
         return cell
     }
     

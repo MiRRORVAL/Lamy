@@ -21,6 +21,7 @@ class TabBarController: UITabBarController {
         let navigatoinForSearch = UINavigationController(rootViewController: searchViewController)
         let navigatoinForLibrary = UINavigationController(rootViewController: library)
         
+        navigatoinForSearch.navigationBar.backgroundColor = .white
         navigatoinForSearch.visibleViewController?.title = "Find"
         navigatoinForSearch.tabBarItem.image = .add
         navigatoinForSearch.tabBarItem.title = "Find"

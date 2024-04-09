@@ -11,6 +11,7 @@ import Alamofire
 final class DataManager {
     
     static let shared = DataManager()
+    
     private let baseUrl = "https://itunes.apple.com/search?term="
     private var country = "&country=RU"
     private var entity = "&entity=song"
@@ -20,7 +21,7 @@ final class DataManager {
     
     func fetchData(for searchRequest: String, complitionHandler: @escaping () -> ()) {
         let fullUrl = baseUrl + searchRequest + entity + country
-        print(fullUrl)
+        guard searchRequest != "" else { return }
         AF.request(fullUrl).response { response in
             if let error = response.error {
                 print(error.localizedDescription)
@@ -30,7 +31,7 @@ final class DataManager {
                 let decoder = JSONDecoder()
                 do {
                     let dedcodedData = try decoder.decode(ReceivedSearchResult.self, from: data)
-                    print(dedcodedData)
+                    guard dedcodedData.resultCount != 0 else { return }
                     self.musicTracks = dedcodedData.results
                     complitionHandler()
                 } catch let decodeError {
@@ -38,6 +39,13 @@ final class DataManager {
                 }
             }
         }
+    }
+    
+    
+    func fetchImage(from url: String) {
+        
+        
+        
     }
     
     private init() {}
