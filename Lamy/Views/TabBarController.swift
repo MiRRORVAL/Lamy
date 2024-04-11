@@ -32,7 +32,6 @@ class TabBarController: UITabBarController {
         navigatoinForLibrary.tabBarItem.title = "Playlists"
         navigatoinForLibrary.navigationBar.prefersLargeTitles = true
         
-        
         viewControllers = [ navigatoinForSearch, navigatoinForLibrary ]
     }
      
