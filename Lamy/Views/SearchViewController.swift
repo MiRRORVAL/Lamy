@@ -17,42 +17,67 @@ class SearchViewController: UITableViewController {
         super.viewDidLoad()
         
         setupSearchController()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
+        
+        let nib = UINib(nibName: "SearchTableViewCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "reuseIdentifier")
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return dataManager.musicTracks.count
     }
 
-
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        cell.textLabel?.text = "\(dataManager.musicTracks[indexPath.row].trackName) \n\(dataManager.musicTracks[indexPath.row].artistName)"
-        cell.textLabel?.numberOfLines = 2
-        if dataManager.musicTracks[indexPath.row].artworkUrl100 == nil {
-            let image = UIImage(systemName: "cube")
-            cell.imageView?.image = image
-        } else {
-            let image = UIImage(systemName: "cube.transparent")
-            cell.imageView?.image = image
-        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath) as! SearchTableViewCell
+        
+        let track = Track(artistName: dataManager.musicTracks[indexPath.row].artistName, collectionName: dataManager.musicTracks[indexPath.row].collectionName, trackName: dataManager.musicTracks[indexPath.row].trackName, artworkUrl100: dataManager.musicTracks[indexPath.row].artworkUrl100)
+        
+        cell.setCell(vith: track)
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let color = UIColor(white: 0.5, alpha: 0.1)
+
+        let image = UIImage(systemName: "headphones.circle.fill")
+        let view = UIView()
+        let imageView = UIImageView(image: image)
+        let screenSize = UIScreen.main.bounds
+        
+        view.tintColor = .white
+        view.backgroundColor = .white
+        imageView.backgroundColor = color
+
+        imageView.frame = CGRect(x: screenSize.width / 4 ,
+                                 y: screenSize.width / 4,
+                                 width: screenSize.width / 2,
+                                 height: screenSize.width / 2)
+        
+        imageView.layer.cornerRadius = imageView.frame.height / 2
+        view.addSubview(imageView)
+        return (view)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        !dataManager.musicTracks.isEmpty ? 0 : 500
     }
     
     private func setupSearchController() {
         navigationItem.searchController = searchController
+        navigationItem.searchController?.searchBar.placeholder = "Insert song/artist name"
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.searchBar.delegate = self
     }
-
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        80
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -73,38 +98,24 @@ class SearchViewController: UITableViewController {
     }
     */
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
 
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
 extension SearchViewController: UISearchBarDelegate {
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (_) in
+            self.dataManager.fetchData(for: "") {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
         func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
             timer?.invalidate()
-            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (_) in
+            timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (_) in
                 self.dataManager.fetchData(for: searchText) {
                     self.tableView.reloadData()
                 }

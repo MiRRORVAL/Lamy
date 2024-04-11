@@ -5,8 +5,8 @@
 //  Created by Nur on 4/8/24.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 final class DataManager {
     
@@ -15,13 +15,17 @@ final class DataManager {
     private let baseUrl = "https://itunes.apple.com/search?term="
     private var country = "&country=RU"
     private var entity = "&entity=song"
-    private var limit = "&limit=25"
+    private var limit = "&limit=50"
     
     var musicTracks: [ReceivedSearchItems] = []
     
     func fetchData(for searchRequest: String, complitionHandler: @escaping () -> ()) {
+        guard searchRequest != "" else {
+            musicTracks.removeAll()
+            complitionHandler()
+            return
+        }
         let fullUrl = baseUrl + searchRequest + entity + country
-        guard searchRequest != "" else { return }
         AF.request(fullUrl).response { response in
             if let error = response.error {
                 print(error.localizedDescription)
@@ -39,13 +43,6 @@ final class DataManager {
                 }
             }
         }
-    }
-    
-    
-    func fetchImage(from url: String) {
-        
-        
-        
     }
     
     private init() {}

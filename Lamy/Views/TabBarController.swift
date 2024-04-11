@@ -33,13 +33,5 @@ class TabBarController: UITabBarController {
         navigatoinForLibrary.navigationBar.prefersLargeTitles = true
         
         viewControllers = [ navigatoinForSearch, navigatoinForLibrary ]
-    }
-     
-    
-    
-    
-    
-    
-    
-    
+    }   
 }
