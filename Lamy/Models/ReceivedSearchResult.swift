@@ -19,5 +19,6 @@ struct ReceivedSearchItems: Decodable {
     let trackID: Int?
     let trackName: String
     let trackTimeMillis: Int
-    let artworkUrl100: String?
+    let artworkUrl100: String
+    let previewUrl: String
 }

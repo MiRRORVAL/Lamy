@@ -40,8 +40,11 @@ class SearchTableViewCell: UITableViewCell {
             cellImage.image = image
             return
         }
+
         if let url = URL(string: atrwork) {
-            cellImage.sd_setImage(with: url)
+            let image = UIImage(systemName: "cube.transparent")
+            cellImage.sd_setImage(with: url, placeholderImage: image)
+            cellImage.tintColor = .gray
         }
     }
     

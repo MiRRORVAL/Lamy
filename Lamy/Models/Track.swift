@@ -13,4 +13,5 @@ struct Track {
     var trackName: String
     var trackTimeMillis: Int?
     var artworkUrl100: String?
+    let previewUrl: String?
 }
