@@ -86,6 +86,7 @@ class SearchViewController: UITableViewController {
                           artworkUrl100: dataManager.musicTracks[indexPath.row].artworkUrl100, previewUrl: dataManager.musicTracks[indexPath.row].previewUrl)
         let window = UIApplication.shared.keyWindow
         let playerViewWindow = Bundle.main.loadNibNamed("PlayerView", owner: self, options: nil)?.first as! PlayerView
+        playerViewWindow.delegate = self
         playerViewWindow.setupView(with: track)
         
         window?.addSubview(playerViewWindow)
@@ -127,3 +128,53 @@ extension SearchViewController: UISearchBarDelegate {
             }
         }
     }
+
+extension SearchViewController: TransferInfoToPlayerViewProtocol {
+    func moveBack() -> Track? {
+        guard let actualIndexPath = tableView.indexPathForSelectedRow else { return nil}
+        let count = dataManager.musicTracks.count - 1
+        let nextRow = actualIndexPath.row - 1 < 0 ? count : actualIndexPath.row - 1
+        let nextIndexPath = IndexPath(row: nextRow, section: 0)
+        print(count)
+        print(actualIndexPath)
+        print(nextIndexPath)
+        tableView.deselectRow(at: tableView.indexPathForSelectedRow!, animated: false)
+        tableView.selectRow(at: nextIndexPath, animated: false, scrollPosition: .none)
+        
+        let track = Track(artistName: dataManager.musicTracks[nextIndexPath.row].artistName, collectionName: dataManager.musicTracks[nextIndexPath.row].collectionName,
+                          trackName: dataManager.musicTracks[nextIndexPath.row].trackName,
+                          artworkUrl100: dataManager.musicTracks[nextIndexPath.row].artworkUrl100, previewUrl: dataManager.musicTracks[nextIndexPath.row].previewUrl)
+        return track
+    }
+    
+    func moveForward() -> Track? {
+        guard let actualIndexPath = tableView.indexPathForSelectedRow else { return nil}
+        let count = dataManager.musicTracks.count - 1
+        let nextRow = actualIndexPath.row + 1 > count ? 0 : actualIndexPath.row + 1
+        let nextIndexPath = IndexPath(row: nextRow, section: 0)
+        print(count)
+        print(actualIndexPath)
+        print(nextIndexPath)
+        tableView.deselectRow(at: tableView.indexPathForSelectedRow!, animated: false)
+        tableView.selectRow(at: nextIndexPath, animated: false, scrollPosition: .none)
+        
+        let track = Track(artistName: dataManager.musicTracks[nextIndexPath.row].artistName, collectionName: dataManager.musicTracks[nextIndexPath.row].collectionName,
+                          trackName: dataManager.musicTracks[nextIndexPath.row].trackName,
+                          artworkUrl100: dataManager.musicTracks[nextIndexPath.row].artworkUrl100, previewUrl: dataManager.musicTracks[nextIndexPath.row].previewUrl)
+        return track
+    }
+    
+    
+        func moveBack() {
+            guard let actualIndexPath = tableView.indexPathForSelectedRow?.row else { return }
+            var nextIndexPath = actualIndexPath - 1
+            nextIndexPath = nextIndexPath < 0 ? dataManager.musicTracks.count : nextIndexPath
+            print(nextIndexPath)
+    }
+    
+    func moveForward() {
+
+    }
+    
+    
+}
