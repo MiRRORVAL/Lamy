@@ -9,12 +9,25 @@ import UIKit
 
 class TabBarController: UITabBarController {
     
+    var fullscreen = false {
+        didSet {
+            if true {
+                
+            }
+        }
+    }
+    
+    let playerViewWindow = Bundle.main.loadNibNamed("PlayerView",
+                                                    owner: TabBarController.self,
+                                                    options: nil)?.first as! PlayerView
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tabBarPlayerView()
         view.backgroundColor = .white
         view.tintColor = .green
-    
+        tabBar.backgroundColor = .white
         let searchViewController = SearchViewController()
         let library = ViewController()
         
@@ -34,4 +47,30 @@ class TabBarController: UITabBarController {
         
         viewControllers = [ navigatoinForSearch, navigatoinForLibrary ]
     }   
+    
+    private func tabBarPlayerView() {
+        view.insertSubview(playerViewWindow, belowSubview: tabBar)
+        setFullScreenPlayer(nil)
+        
+    }
+    
+    private func setFullScreenPlayer(_ set: Bool?) {
+        playerViewWindow.translatesAutoresizingMaskIntoConstraints = false
+        
+        if set == true {
+            playerViewWindow.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            playerViewWindow.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        } else {
+            playerViewWindow.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -70).isActive = true
+            playerViewWindow.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        }
+        playerViewWindow.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        playerViewWindow.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        
+        playerViewWindow.backgroundColor = .blue
+        
+        
+        
+        
+    }
 }

@@ -93,7 +93,7 @@ class SearchViewController: UITableViewController {
         playerViewWindow.delegate = self
         playerViewWindow.setupView(with: track)
         
-        window?.addSubview(playerViewWindow)
+        window?.insertSubview(playerViewWindow, at: 1)
     }
 
     /*
