@@ -84,8 +84,12 @@ class SearchViewController: UITableViewController {
         let track = Track(artistName: dataManager.musicTracks[indexPath.row].artistName, collectionName: dataManager.musicTracks[indexPath.row].collectionName, 
                           trackName: dataManager.musicTracks[indexPath.row].trackName,
                           artworkUrl100: dataManager.musicTracks[indexPath.row].artworkUrl100, previewUrl: dataManager.musicTracks[indexPath.row].previewUrl)
-        let window = UIApplication.shared.keyWindow
-        let playerViewWindow = Bundle.main.loadNibNamed("PlayerView", owner: self, options: nil)?.first as! PlayerView
+        let window = UIApplication.shared.connectedScenes.compactMap {
+            ($0 as? UIWindowScene)?.keyWindow
+        }.last
+        let playerViewWindow = Bundle.main.loadNibNamed("PlayerView",
+                                                        owner: self,
+                                                        options: nil)?.first as! PlayerView
         playerViewWindow.delegate = self
         playerViewWindow.setupView(with: track)
         
