@@ -17,9 +17,64 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YBd-1o-kmX">
                     <rect key="frame" x="0.0" y="59" width="393" height="70"/>
-                    <color key="backgroundColor" systemColor="systemBrownColor"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="WBl-ip-CPc">
+                            <rect key="frame" x="10" y="10" width="373" height="50"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qf3-48-NEm">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="qf3-48-NEm" secondAttribute="height" multiplier="1:1" id="43g-ut-EoH"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LLh-eE-K5P">
+                                    <rect key="frame" x="60" y="14.666666666666671" width="223" height="21"/>
+                                    <fontDescription key="fontDescription" name="Kailasa-Bold" family="Kailasa" pointSize="16"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6F5-Kd-0gW">
+                                    <rect key="frame" x="293" y="7.6666666666666714" width="80" height="35"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bcn-8K-fee">
+                                            <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="bcn-8K-fee" secondAttribute="height" multiplier="1:1" id="wBR-IB-gA3"/>
+                                            </constraints>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" image="play.fill" catalog="system"/>
+                                            <connections>
+                                                <action selector="miniPlayButtonPressed:" destination="snC-tJ-XEY" eventType="touchUpInside" id="tRo-cY-bqK"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e2x-72-TrC">
+                                            <rect key="frame" x="45" y="0.0" width="35" height="35"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="e2x-72-TrC" secondAttribute="height" multiplier="1:1" id="opI-wy-qPs"/>
+                                                <constraint firstAttribute="height" constant="35" id="ptl-2m-mXU"/>
+                                            </constraints>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" image="forward.fill" catalog="system"/>
+                                            <connections>
+                                                <action selector="miniNextButtonPressed:" destination="snC-tJ-XEY" eventType="touchUpInside" id="KrK-Bl-DUe"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="qf3-48-NEm" secondAttribute="bottom" id="ZAp-iR-BRN"/>
+                                <constraint firstItem="qf3-48-NEm" firstAttribute="top" secondItem="WBl-ip-CPc" secondAttribute="top" id="wRs-KY-H1B"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.80941929768041232" green="0.80941929768041232" blue="0.80941929768041232" alpha="0.20373618197278912" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="70" id="3tU-bQ-LfG"/>
+                        <constraint firstItem="WBl-ip-CPc" firstAttribute="top" secondItem="YBd-1o-kmX" secondAttribute="top" constant="10" id="Isb-0Y-ZII"/>
+                        <constraint firstItem="WBl-ip-CPc" firstAttribute="leading" secondItem="YBd-1o-kmX" secondAttribute="leading" constant="10" id="QIC-Le-zT2"/>
+                        <constraint firstAttribute="trailing" secondItem="WBl-ip-CPc" secondAttribute="trailing" constant="10" id="T4W-cg-h58"/>
+                        <constraint firstAttribute="bottom" secondItem="WBl-ip-CPc" secondAttribute="bottom" constant="10" id="tPh-Or-QtM"/>
                     </constraints>
                 </view>
                 <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JGF-Be-GYC">
@@ -161,12 +216,12 @@
                 <constraint firstItem="JGF-Be-GYC" firstAttribute="top" secondItem="5G1-2S-WPP" secondAttribute="top" id="pNE-gc-HIX"/>
                 <constraint firstItem="YBd-1o-kmX" firstAttribute="top" secondItem="5G1-2S-WPP" secondAttribute="top" id="xw8-xb-poK"/>
             </constraints>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="JGF-Be-GYC"/>
-                </mask>
-            </variation>
             <connections>
+                <outlet property="maxView" destination="JGF-Be-GYC" id="hsM-aL-NMq"/>
+                <outlet property="miniImageView" destination="qf3-48-NEm" id="j9v-os-4Kn"/>
+                <outlet property="miniNameLable" destination="LLh-eE-K5P" id="gUR-ND-dSw"/>
+                <outlet property="miniPlayButton" destination="bcn-8K-fee" id="t2M-3c-etT"/>
+                <outlet property="miniView" destination="YBd-1o-kmX" id="yWx-O5-G2O"/>
                 <outlet property="nextButtone" destination="ngB-NP-JFJ" id="A46-Lb-1oO"/>
                 <outlet property="playButton" destination="hJn-lV-Mhs" id="vPe-oi-SiT"/>
                 <outlet property="prevButton" destination="vlr-q0-TM4" id="BHT-1h-k1w"/>
@@ -186,16 +241,14 @@
         <image name="forward.fill" catalog="system" width="128" height="77"/>
         <image name="pause.fill" catalog="system" width="117" height="128"/>
         <image name="photo.stack" catalog="system" width="126" height="128"/>
+        <image name="play.fill" catalog="system" width="117" height="128"/>
         <image name="speaker.wave.1.fill" catalog="system" width="128" height="104"/>
         <image name="speaker.wave.3.fill" catalog="system" width="128" height="84"/>
-        <systemColor name="systemBrownColor">
-            <color red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

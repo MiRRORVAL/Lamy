@@ -15,13 +15,6 @@ extension SearchViewController: TransferInfoToPlayerViewProtocol {
         tableView.selectRow(at: nextIndexPath, animated: false, scrollPosition: .none)
     }
     
-    private func makeTrack(nextIndexPath: IndexPath) -> Track {
-        let track = Track(artistName: dataManager.musicTracks[nextIndexPath.row].artistName, collectionName: dataManager.musicTracks[nextIndexPath.row].collectionName,
-                          trackName: dataManager.musicTracks[nextIndexPath.row].trackName,
-                          artworkUrl100: dataManager.musicTracks[nextIndexPath.row].artworkUrl100, previewUrl: dataManager.musicTracks[nextIndexPath.row].previewUrl)
-        return track
-    }
-    
     func moveBack() -> Track? {
         guard let actualIndexPath = tableView.indexPathForSelectedRow else { return nil }
         let count = dataManager.musicTracks.count - 1

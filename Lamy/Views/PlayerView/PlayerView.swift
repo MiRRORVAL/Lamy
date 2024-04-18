@@ -10,6 +10,11 @@ import AVKit
 
 
 class PlayerView: UIView {
+    @IBOutlet weak var miniPlayButton: UIButton!
+    @IBOutlet weak var miniNameLable: UILabel!
+    @IBOutlet weak var miniImageView: UIImageView!
+    @IBOutlet weak var miniView: UIView!
+    @IBOutlet weak var maxView: UIStackView!
     @IBOutlet weak var volumeSlider: UISlider!
     @IBOutlet weak var songSlider: UISlider!
     @IBOutlet weak var nextButtone: UIButton!
@@ -58,29 +63,34 @@ class PlayerView: UIView {
     
 
     @IBAction func playButtonePressed(_ sender: Any) {
+        playButtonSetup()
+    }
+
+    @IBAction func songSliderMuved(_ sender: Any) {
+    }
+    
+    @IBAction func volumeSliderMuved(_ sender: Any) {
+        playerAV.volume = volumeSlider.value
+    }
+    @IBAction func exitButtonePressed(_ sender: Any) {
+        playerControlDelegate?.minimizePlayerView()
+    }
+    
+    private func playButtonSetup() {
         if playerAV.timeControlStatus == .playing {
             playerAV.pause()
             let image = UIImage(systemName: "play.fill")
+            miniPlayButton.setImage(image, for: .normal)
             playButton.setImage(image, for: .normal)
             imageScale = 0.8
         } else {
             playerAV.play()
             let image = UIImage(systemName: "pause.fill")
+            miniPlayButton.setImage(image, for: .normal)
             playButton.setImage(image, for: .normal)
             imageScale = 1
         }
     }
-
-    @IBAction func songSliderMuved(_ sender: Any) {
-    }
-    @IBAction func volumeSliderMuved(_ sender: Any) {
-        playerAV.volume = volumeSlider.value
-    }
-    @IBAction func exitButtonePressed(_ sender: Any) {
-        
-        playerControlDelegate?.minimizePlayerView()
-    }
-    
     private func updateSecondsCounter() {
         let interval = CMTimeMake(value: 1, timescale: 3)
 
@@ -115,9 +125,10 @@ class PlayerView: UIView {
     }
     
     func setupView(with info: Track) {
-//    volumeSlider
+
         songAuthor.text = info.artistName
         songName.text = info.trackName
+        miniNameLable.text = info.trackName
         updateSecondsCounter()
         let imageUrl: URL? = {
             let urlString = info.artworkUrl100?.replacingOccurrences(of: "100x100", with: "600x600")
@@ -125,9 +136,18 @@ class PlayerView: UIView {
             return url
         }()
         let plaseholderImage = UIImage(systemName: "cube.transparent")
+        miniImageView.sd_setImage(with: imageUrl, placeholderImage: plaseholderImage)
         trackImage.sd_setImage(with: imageUrl, placeholderImage: plaseholderImage)
         guard let previewUrl = info.previewUrl else { return }
         playSong(from: previewUrl)
 
+    }
+    @IBAction func miniPlayButtonPressed(_ sender: Any) {
+        playButtonSetup()
+    }
+    
+    @IBAction func miniNextButtonPressed(_ sender: Any) {
+        let track = delegate?.moveForward()
+        setupView(with: track!)
     }
 }

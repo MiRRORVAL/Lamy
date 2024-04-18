@@ -9,5 +9,5 @@ import Foundation
 
 protocol PlayerViewControlProtocol: AnyObject {
     func minimizePlayerView()
-    func maximizePlayerView(play track: Track)
+    func maximizePlayerView(play track: Track?)
 }

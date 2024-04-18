@@ -8,29 +8,20 @@
 import UIKit
 
 class TabBarController: UITabBarController {
-    
-    var fullscreen = false {
-        didSet {
-            if true {
-                
-            }
-        }
-    }
-    
-    let playerViewWindow = Bundle.main.loadNibNamed("PlayerView",
+    private let searchViewController = SearchViewController()
+    private let library = ViewController()
+    private var minimizedConstrain: NSLayoutConstraint!
+    private var maximizedConstrain: NSLayoutConstraint!
+    private var bottomConstrain: NSLayoutConstraint!
+    private let playerView = Bundle.main.loadNibNamed("PlayerView",
                                                     owner: TabBarController.self,
                                                     options: nil)?.first as! PlayerView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tabBarPlayerView()
         view.backgroundColor = .white
         view.tintColor = .green
         tabBar.backgroundColor = .white
-        let searchViewController = SearchViewController()
-        let library = ViewController()
-        
         let navigatoinForSearch = UINavigationController(rootViewController: searchViewController)
         let navigatoinForLibrary = UINavigationController(rootViewController: library)
         
@@ -39,38 +30,74 @@ class TabBarController: UITabBarController {
         navigatoinForSearch.tabBarItem.image = .add
         navigatoinForSearch.tabBarItem.title = "Find"
         navigatoinForSearch.navigationBar.prefersLargeTitles = true
-        
         navigatoinForLibrary.visibleViewController?.title = "Playlists"
         navigatoinForLibrary.tabBarItem.image = .checkmark
         navigatoinForLibrary.tabBarItem.title = "Playlists"
         navigatoinForLibrary.navigationBar.prefersLargeTitles = true
         
         viewControllers = [ navigatoinForSearch, navigatoinForLibrary ]
-    }   
-    
-    private func tabBarPlayerView() {
-        view.insertSubview(playerViewWindow, belowSubview: tabBar)
-        setFullScreenPlayer(nil)
-        
+        view.insertSubview(playerView, belowSubview: tabBar)
+        setupPlayer()
     }
     
-    private func setFullScreenPlayer(_ set: Bool?) {
-        playerViewWindow.translatesAutoresizingMaskIntoConstraints = false
+    
+    private func setupPlayer() {
+        playerView.playerControlDelegate = self
+        playerView.delegate = searchViewController
+        searchViewController.tabBarDelegate = self
+        playerView.translatesAutoresizingMaskIntoConstraints = false
         
-        if set == true {
-            playerViewWindow.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-            playerViewWindow.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        } else {
-            playerViewWindow.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -70).isActive = true
-            playerViewWindow.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        maximizedConstrain = playerView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height)
+        minimizedConstrain = playerView.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -70)
+        bottomConstrain = playerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: view.frame.height)
+        
+        playerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        playerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        maximizedConstrain.isActive = true
+        bottomConstrain.isActive = true
+    }
+}
+
+extension TabBarController: PlayerViewControlProtocol {
+    
+    func minimizePlayerView() {
+        self.tabBar.transform = CGAffineTransform(scaleX: 1, y: 1)
+        playerView.miniView.isHidden = false
+        playerView.maxView.isHidden = true
+        maximizedConstrain.isActive = false
+        minimizedConstrain.isActive = true
+        bottomConstrain.constant = view.frame.height
+        UIView.animate(withDuration: 0.2,
+                           delay: 0,
+                           usingSpringWithDamping: 1,
+                           initialSpringVelocity: 1,
+                           options: .curveLinear,
+                           animations: {
+                self.view.layoutIfNeeded()
+            },
+                           completion: nil)
         }
-        playerViewWindow.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        playerViewWindow.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         
-        playerViewWindow.backgroundColor = .blue
-        
-        
-        
+    
+    func maximizePlayerView(play track: Track?) {
+        self.tabBar.transform = CGAffineTransform(scaleX: 0, y: 0.01)
+        playerView.miniView.isHidden = true
+        playerView.maxView.isHidden = false
+        maximizedConstrain.constant = 0
+        minimizedConstrain.isActive = false
+        maximizedConstrain.isActive = true
+        bottomConstrain.constant = 0
+        UIView.animate(withDuration: 0.2,
+                           delay: 0,
+                           usingSpringWithDamping: 1,
+                           initialSpringVelocity: 1,
+                           options: .curveLinear,
+                           animations: {
+                self.view.layoutIfNeeded()
+            },
+                           completion: nil)
+        guard let track = track else { return }
+        playerView.setupView(with: track)
         
     }
 }
