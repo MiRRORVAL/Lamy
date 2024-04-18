@@ -22,6 +22,8 @@ class PlayerView: UIView {
     @IBOutlet weak var trackImage: UIImageView!
     
     weak var delegate: TransferInfoToPlayerViewProtocol?
+    weak var playerControlDelegate: PlayerViewControlProtocol?
+    
     var imageScale: Double = 1 {
         didSet {
             UIView.animate(withDuration: 2, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveLinear) {
@@ -76,7 +78,7 @@ class PlayerView: UIView {
     }
     @IBAction func exitButtonePressed(_ sender: Any) {
         
-        self.removeFromSuperview()
+        playerControlDelegate?.minimizePlayerView()
     }
     
     private func updateSecondsCounter() {

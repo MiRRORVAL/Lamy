@@ -11,7 +11,7 @@ class SearchViewController: UITableViewController {
 
     let searchController = UISearchController(searchResultsController: nil)
     
-    private var timer: Timer?
+    var timer: Timer?
     let dataManager = DataManager.shared
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,89 +96,5 @@ class SearchViewController: UITableViewController {
         window?.insertSubview(playerViewWindow, at: 1)
     }
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-
-
 }
 
-extension SearchViewController: UISearchBarDelegate {
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (_) in
-            self.dataManager.fetchData(for: "") {
-                self.tableView.reloadData()
-            }
-        }
-    }
-    
-        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            timer?.invalidate()
-            timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (_) in
-                self.dataManager.fetchData(for: searchText) {
-                    self.tableView.reloadData()
-                }
-            }
-        }
-    }
-
-extension SearchViewController: TransferInfoToPlayerViewProtocol {
-    func moveBack() -> Track? {
-        guard let actualIndexPath = tableView.indexPathForSelectedRow else { return nil}
-        let count = dataManager.musicTracks.count - 1
-        let nextRow = actualIndexPath.row - 1 < 0 ? count : actualIndexPath.row - 1
-        let nextIndexPath = IndexPath(row: nextRow, section: 0)
-        print(count)
-        print(actualIndexPath)
-        print(nextIndexPath)
-        tableView.deselectRow(at: tableView.indexPathForSelectedRow!, animated: false)
-        tableView.selectRow(at: nextIndexPath, animated: false, scrollPosition: .none)
-        
-        let track = Track(artistName: dataManager.musicTracks[nextIndexPath.row].artistName, collectionName: dataManager.musicTracks[nextIndexPath.row].collectionName,
-                          trackName: dataManager.musicTracks[nextIndexPath.row].trackName,
-                          artworkUrl100: dataManager.musicTracks[nextIndexPath.row].artworkUrl100, previewUrl: dataManager.musicTracks[nextIndexPath.row].previewUrl)
-        return track
-    }
-    
-    func moveForward() -> Track? {
-        guard let actualIndexPath = tableView.indexPathForSelectedRow else { return nil}
-        let count = dataManager.musicTracks.count - 1
-        let nextRow = actualIndexPath.row + 1 > count ? 0 : actualIndexPath.row + 1
-        let nextIndexPath = IndexPath(row: nextRow, section: 0)
-        print(count)
-        print(actualIndexPath)
-        print(nextIndexPath)
-        tableView.deselectRow(at: tableView.indexPathForSelectedRow!, animated: false)
-        tableView.selectRow(at: nextIndexPath, animated: false, scrollPosition: .none)
-        
-        let track = Track(artistName: dataManager.musicTracks[nextIndexPath.row].artistName, collectionName: dataManager.musicTracks[nextIndexPath.row].collectionName,
-                          trackName: dataManager.musicTracks[nextIndexPath.row].trackName,
-                          artworkUrl100: dataManager.musicTracks[nextIndexPath.row].artworkUrl100, previewUrl: dataManager.musicTracks[nextIndexPath.row].previewUrl)
-        return track
-    }
-    
-    
-        func moveBack() {
-            guard let actualIndexPath = tableView.indexPathForSelectedRow?.row else { return }
-            var nextIndexPath = actualIndexPath - 1
-            nextIndexPath = nextIndexPath < 0 ? dataManager.musicTracks.count : nextIndexPath
-            print(nextIndexPath)
-    }
-    
-    func moveForward() {
-
-    }
-    
-    
-}

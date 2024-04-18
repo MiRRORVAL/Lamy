@@ -25,6 +25,9 @@
 		518AD92A2BC7DA28003BE692 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 518AD9292BC7DA28003BE692 /* SDWebImageMapKit */; };
 		518AD92D2BC7DCA8003BE692 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518AD92B2BC7DCA8003BE692 /* SearchTableViewCell.swift */; };
 		518AD92E2BC7DCA8003BE692 /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 518AD92C2BC7DCA8003BE692 /* SearchTableViewCell.xib */; };
+		519E9F3E2BD10ECF009C4BDD /* PlayerViewControlProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519E9F3D2BD10ECF009C4BDD /* PlayerViewControlProtocol.swift */; };
+		519E9F402BD113C3009C4BDD /* Extension SearchViewController + UISearchBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519E9F3F2BD113C3009C4BDD /* Extension SearchViewController + UISearchBarDelegate.swift */; };
+		519E9F422BD11462009C4BDD /* Extaension SearchViewController + TranferInfoViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519E9F412BD11462009C4BDD /* Extaension SearchViewController + TranferInfoViewProtocol.swift */; };
 		51CE9FBC2BC962FC00C7782B /* TransferInfoToPlayerViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CE9FBB2BC962FC00C7782B /* TransferInfoToPlayerViewProtocol.swift */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +48,9 @@
 		516EBE2B2BC936DA00AB9FE9 /* PlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerView.xib; sourceTree = "<group>"; };
 		518AD92B2BC7DCA8003BE692 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		518AD92C2BC7DCA8003BE692 /* SearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
+		519E9F3D2BD10ECF009C4BDD /* PlayerViewControlProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewControlProtocol.swift; sourceTree = "<group>"; };
+		519E9F3F2BD113C3009C4BDD /* Extension SearchViewController + UISearchBarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension SearchViewController + UISearchBarDelegate.swift"; sourceTree = "<group>"; };
+		519E9F412BD11462009C4BDD /* Extaension SearchViewController + TranferInfoViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extaension SearchViewController + TranferInfoViewProtocol.swift"; sourceTree = "<group>"; };
 		51CE9FBB2BC962FC00C7782B /* TransferInfoToPlayerViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferInfoToPlayerViewProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,6 +104,7 @@
 				496528362BC4186B00961885 /* Track.swift */,
 				496528432BC45A2D00961885 /* ReceivedSearchResult.swift */,
 				51CE9FBB2BC962FC00C7782B /* TransferInfoToPlayerViewProtocol.swift */,
+				519E9F3D2BD10ECF009C4BDD /* PlayerViewControlProtocol.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -108,6 +115,8 @@
 				516EBE282BC936A000AB9FE9 /* PlayerView */,
 				4963ED212BC2E84C005F4C63 /* TabBarController.swift */,
 				496528332BC3F44600961885 /* SearchViewController.swift */,
+				519E9F412BD11462009C4BDD /* Extaension SearchViewController + TranferInfoViewProtocol.swift */,
+				519E9F3F2BD113C3009C4BDD /* Extension SearchViewController + UISearchBarDelegate.swift */,
 				496528312BC3E7F500961885 /* ViewController.swift */,
 				518AD92F2BC7DCBF003BE692 /* Cell */,
 			);
@@ -243,12 +252,15 @@
 				518AD92D2BC7DCA8003BE692 /* SearchTableViewCell.swift in Sources */,
 				496528442BC45A2D00961885 /* ReceivedSearchResult.swift in Sources */,
 				496528342BC3F44600961885 /* SearchViewController.swift in Sources */,
+				519E9F402BD113C3009C4BDD /* Extension SearchViewController + UISearchBarDelegate.swift in Sources */,
 				516EBE2A2BC936C300AB9FE9 /* PlayerView.swift in Sources */,
 				4963ED222BC2E84C005F4C63 /* TabBarController.swift in Sources */,
+				519E9F3E2BD10ECF009C4BDD /* PlayerViewControlProtocol.swift in Sources */,
 				4963ED0E2BC2D18D005F4C63 /* AppDelegate.swift in Sources */,
 				4965283D2BC41AB200961885 /* DataManager.swift in Sources */,
 				496528322BC3E7F500961885 /* ViewController.swift in Sources */,
 				4963ED102BC2D18D005F4C63 /* SceneDelegate.swift in Sources */,
+				519E9F422BD11462009C4BDD /* Extaension SearchViewController + TranferInfoViewProtocol.swift in Sources */,
 				51CE9FBC2BC962FC00C7782B /* TransferInfoToPlayerViewProtocol.swift in Sources */,
 				496528372BC4186B00961885 /* Track.swift in Sources */,
 			);

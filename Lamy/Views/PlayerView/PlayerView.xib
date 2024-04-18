@@ -15,6 +15,13 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YBd-1o-kmX">
+                    <rect key="frame" x="0.0" y="59" width="393" height="70"/>
+                    <color key="backgroundColor" systemColor="systemBrownColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="70" id="3tU-bQ-LfG"/>
+                    </constraints>
+                </view>
                 <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JGF-Be-GYC">
                     <rect key="frame" x="30" y="59" width="333" height="763"/>
                     <subviews>
@@ -146,11 +153,19 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" systemColor="systemGreenColor"/>
             <constraints>
+                <constraint firstItem="5G1-2S-WPP" firstAttribute="trailing" secondItem="YBd-1o-kmX" secondAttribute="trailing" id="6j8-tr-09g"/>
+                <constraint firstItem="YBd-1o-kmX" firstAttribute="leading" secondItem="5G1-2S-WPP" secondAttribute="leading" id="9M4-8M-VhV"/>
                 <constraint firstItem="JGF-Be-GYC" firstAttribute="leading" secondItem="5G1-2S-WPP" secondAttribute="leading" constant="30" id="DLD-lt-mTu"/>
                 <constraint firstItem="5G1-2S-WPP" firstAttribute="trailing" secondItem="JGF-Be-GYC" secondAttribute="trailing" constant="30" id="JbG-nE-gZw"/>
                 <constraint firstAttribute="bottom" secondItem="JGF-Be-GYC" secondAttribute="bottom" constant="30" id="mXI-QW-Mhw"/>
                 <constraint firstItem="JGF-Be-GYC" firstAttribute="top" secondItem="5G1-2S-WPP" secondAttribute="top" id="pNE-gc-HIX"/>
+                <constraint firstItem="YBd-1o-kmX" firstAttribute="top" secondItem="5G1-2S-WPP" secondAttribute="top" id="xw8-xb-poK"/>
             </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="JGF-Be-GYC"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="nextButtone" destination="ngB-NP-JFJ" id="A46-Lb-1oO"/>
                 <outlet property="playButton" destination="hJn-lV-Mhs" id="vPe-oi-SiT"/>
@@ -173,6 +188,9 @@
         <image name="photo.stack" catalog="system" width="126" height="128"/>
         <image name="speaker.wave.1.fill" catalog="system" width="128" height="104"/>
         <image name="speaker.wave.3.fill" catalog="system" width="128" height="84"/>
+        <systemColor name="systemBrownColor">
+            <color red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemGray2Color">
             <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
