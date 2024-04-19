@@ -29,6 +29,8 @@ class PlayerView: UIView {
     @IBOutlet weak var trackImage: UIImageView!
     weak var delegate: TransferInfoToPlayerViewProtocol?
     weak var playerControlDelegate: PlayerViewControlProtocol?
+    var baseColor: UIColor!
+    
     var imageScale: Double = 1 {
         didSet {
             UIView.animate(withDuration: 2, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveLinear) {
@@ -136,8 +138,10 @@ class PlayerView: UIView {
     
     @objc private func muveViewByGuewsure() {
         if miniView.isHidden {
+            self.backgroundColor = baseColor.withAlphaComponent(0.7)
             playerControlDelegate?.minimizePlayerView()
         } else {
+            self.backgroundColor = baseColor.withAlphaComponent(0.98)
             playerControlDelegate?.maximizePlayerView(play: nil)
         }
     }
@@ -157,9 +161,8 @@ class PlayerView: UIView {
         miniImageView.sd_setImage(with: imageUrl, placeholderImage: plaseholderImage)
         trackImage.sd_setImage(with: imageUrl, placeholderImage: plaseholderImage, options: SDWebImageOptions(rawValue: 0), completed: { (image, error, cacheType, imageURL) in
             let image: UIImage = self.miniImageView.image!
-            let color = image.averageColor!.withAlphaComponent(0.95)
-            self.miniView.backgroundColor = color
-            self.backgroundColor = color
+            self.baseColor = image.averageColor!.withAlphaComponent(0.98)
+            self.backgroundColor = self.baseColor
            })
         guard let previewUrl = info.previewUrl else { return }
         playSong(from: previewUrl)

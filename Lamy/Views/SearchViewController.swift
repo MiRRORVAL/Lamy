@@ -39,22 +39,16 @@ class SearchViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let image = UIImage(systemName: "headphones.circle.fill")
-        let view = UIView()
-        let imageView = UIImageView(image: image)
-        let screenSize = UIScreen.main.bounds
-        imageView.frame = CGRect(x: 0 ,
-                                 y: 0,
-                                 width: screenSize.width,
-                                 height: screenSize.width)
-        imageView.layer.cornerRadius = imageView.frame.height / 2
-//        view.insertSubview(imageView, belowSubview: tableView)
-        view.addSubview(imageView)
-        return (view)
+        let lable = UILabel()
+        lable.textAlignment = .center
+        lable.text = "Looking for romething?"
+        lable.textColor = .lightGray
+        lable.font = .italicSystemFont(ofSize: 20)
+        return lable
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        var result: CGFloat = !dataManager.musicTracks.isEmpty ? 0 : 500
+        let result: CGFloat = !dataManager.musicTracks.isEmpty ? 0 : 30
         return result
     }
     

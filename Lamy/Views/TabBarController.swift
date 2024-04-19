@@ -20,6 +20,11 @@ class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
+        setupPlayer()
+    }
+    
+    private func setupView() {
         view.backgroundColor = .white
         view.tintColor = .darkGray
         tabBar.backgroundColor = .white
@@ -36,10 +41,19 @@ class TabBarController: UITabBarController {
         navigatoinForLibrary.tabBarItem.image = rightImage
         navigatoinForLibrary.tabBarItem.title = "Playlists"
         navigatoinForLibrary.navigationBar.prefersLargeTitles = true
+        let image = UIImage(systemName: "headphones.circle.fill")
+        let imageView = UIImageView(image: image)
+        let screenSize = UIScreen.main.bounds
+        imageView.frame = CGRect(x: 0 ,
+                                 y: (screenSize.midY + 100) / 2,
+                                 width: screenSize.width,
+                                 height: screenSize.width)
+        imageView.layer.cornerRadius = imageView.frame.height / 2
+        imageView.tintColor = .gray.withAlphaComponent(0.05)
         
         viewControllers = [ navigatoinForSearch, navigatoinForLibrary ]
+        view.insertSubview(imageView, belowSubview: tabBar)
         view.insertSubview(playerView, belowSubview: tabBar)
-        setupPlayer()
     }
     
     private func setupPlayer() {
@@ -59,6 +73,7 @@ class TabBarController: UITabBarController {
 
 extension TabBarController: PlayerViewControlProtocol {
     func minimizePlayerView() {
+//        view.removeFromSuperview()
         self.tabBar.transform = CGAffineTransform(scaleX: 1, y: 1)
         playerView.miniView.isHidden = false
         playerView.maxView.isHidden = true
