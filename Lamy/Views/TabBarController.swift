@@ -8,6 +8,7 @@
 import UIKit
 
 class TabBarController: UITabBarController {
+    
     private let searchViewController = SearchViewController()
     private let library = ViewController()
     private var minimizedConstrain: NSLayoutConstraint!
@@ -20,18 +21,19 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        view.tintColor = .green
+        view.tintColor = .darkGray
         tabBar.backgroundColor = .white
         let navigatoinForSearch = UINavigationController(rootViewController: searchViewController)
         let navigatoinForLibrary = UINavigationController(rootViewController: library)
-        
         navigatoinForSearch.navigationBar.backgroundColor = .white
         navigatoinForSearch.visibleViewController?.title = "Find"
-        navigatoinForSearch.tabBarItem.image = .add
+        let leftImage = UIImage(systemName: "play.circle.fill")
+        navigatoinForSearch.tabBarItem.image = leftImage
         navigatoinForSearch.tabBarItem.title = "Find"
         navigatoinForSearch.navigationBar.prefersLargeTitles = true
         navigatoinForLibrary.visibleViewController?.title = "Playlists"
-        navigatoinForLibrary.tabBarItem.image = .checkmark
+        let rightImage = UIImage(systemName: "heart.circle.fill")
+        navigatoinForLibrary.tabBarItem.image = rightImage
         navigatoinForLibrary.tabBarItem.title = "Playlists"
         navigatoinForLibrary.navigationBar.prefersLargeTitles = true
         
@@ -40,17 +42,14 @@ class TabBarController: UITabBarController {
         setupPlayer()
     }
     
-    
     private func setupPlayer() {
         playerView.playerControlDelegate = self
         playerView.delegate = searchViewController
         searchViewController.tabBarDelegate = self
         playerView.translatesAutoresizingMaskIntoConstraints = false
-        
         maximizedConstrain = playerView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height)
         minimizedConstrain = playerView.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -70)
         bottomConstrain = playerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: view.frame.height)
-        
         playerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         playerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         maximizedConstrain.isActive = true
@@ -59,7 +58,6 @@ class TabBarController: UITabBarController {
 }
 
 extension TabBarController: PlayerViewControlProtocol {
-    
     func minimizePlayerView() {
         self.tabBar.transform = CGAffineTransform(scaleX: 1, y: 1)
         playerView.miniView.isHidden = false
@@ -83,7 +81,8 @@ extension TabBarController: PlayerViewControlProtocol {
         self.tabBar.transform = CGAffineTransform(scaleX: 0, y: 0.01)
         playerView.miniView.isHidden = true
         playerView.maxView.isHidden = false
-        maximizedConstrain.constant = 0
+        let searchHight = searchViewController.searchController.searchBar.frame.height * 2
+        maximizedConstrain.constant = searchHight
         minimizedConstrain.isActive = false
         maximizedConstrain.isActive = true
         bottomConstrain.constant = 0

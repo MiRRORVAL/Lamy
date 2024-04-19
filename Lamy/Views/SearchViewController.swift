@@ -13,6 +13,7 @@ class SearchViewController: UITableViewController {
     weak var tabBarDelegate: PlayerViewControlProtocol?
     var timer: Timer?
     let dataManager = DataManager.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
@@ -38,33 +39,29 @@ class SearchViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let color = UIColor(white: 0.5, alpha: 0.1)
         let image = UIImage(systemName: "headphones.circle.fill")
         let view = UIView()
         let imageView = UIImageView(image: image)
         let screenSize = UIScreen.main.bounds
-        view.tintColor = .white
-        view.backgroundColor = .white
-        imageView.backgroundColor = color
-
-        imageView.frame = CGRect(x: screenSize.width / 4 ,
-                                 y: screenSize.width / 4,
-                                 width: screenSize.width / 2,
-                                 height: screenSize.width / 2)
-        
+        imageView.frame = CGRect(x: 0 ,
+                                 y: 0,
+                                 width: screenSize.width,
+                                 height: screenSize.width)
         imageView.layer.cornerRadius = imageView.frame.height / 2
+//        view.insertSubview(imageView, belowSubview: tableView)
         view.addSubview(imageView)
         return (view)
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        !dataManager.musicTracks.isEmpty ? 0 : 500
+        var result: CGFloat = !dataManager.musicTracks.isEmpty ? 0 : 500
+        return result
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         80
     }
-
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let track = makeTrack(nextIndexPath: indexPath)
         tabBarDelegate?.maximizePlayerView(play: track)
@@ -79,10 +76,11 @@ class SearchViewController: UITableViewController {
     
     private func setupSearchController() {
         navigationItem.searchController = searchController
-        navigationItem.searchController?.searchBar.placeholder = "Insert song/artist name"
+        navigationItem.searchController?.searchBar.placeholder = "Let's find"
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.searchBar.delegate = self
+        let color = UIColor(red: 0.2, green: 0.6, blue: 0.7, alpha: 0.5)
+        view.tintColor = color
     }
-
 }
 
