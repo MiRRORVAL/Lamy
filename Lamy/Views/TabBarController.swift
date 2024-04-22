@@ -73,7 +73,6 @@ class TabBarController: UITabBarController {
 
 extension TabBarController: PlayerViewControlProtocol {
     func minimizePlayerView() {
-//        view.removeFromSuperview()
         self.tabBar.transform = CGAffineTransform(scaleX: 1, y: 1)
         playerView.miniView.isHidden = false
         playerView.maxView.isHidden = true

@@ -27,6 +27,8 @@ class PlayerView: UIView {
     @IBOutlet weak var songTimerLeft: UILabel!
     @IBOutlet weak var songTimerRight: UILabel!
     @IBOutlet weak var trackImage: UIImageView!
+    @IBOutlet weak var miniButtonsStackView: UIStackView!
+    
     weak var delegate: TransferInfoToPlayerViewProtocol?
     weak var playerControlDelegate: PlayerViewControlProtocol?
     var baseColor: UIColor!
@@ -50,6 +52,7 @@ class PlayerView: UIView {
         super.awakeFromNib()
         let size = playButton.frame
         playButton.layer.cornerRadius = size.width / 2
+        miniButtonsStackView.layer.cornerRadius = miniButtonsStackView.frame.height / 2
         volumeSlider.value = playerAV.volume
         gestureRecognizer()
         nextButtone.transform = .init(scaleX: 0.5, y: 0.5)
@@ -59,6 +62,8 @@ class PlayerView: UIView {
         playButton.backgroundColor = .black.withAlphaComponent(0.5)
         prevButton.backgroundColor = .black.withAlphaComponent(0.5)
         nextButtone.backgroundColor = .black.withAlphaComponent(0.5)
+        miniView.backgroundColor = .clear
+        maxView.backgroundColor = .clear
     }
     
     @IBAction func prevButtonPressed(_ sender: Any) {
@@ -107,10 +112,7 @@ class PlayerView: UIView {
             self.timeInSeconds()
             let timer = time.seconds / 60
             self.songTimerLeft.text = String(timer)
-            guard let duration = self.playerAV.currentItem?.duration.seconds else {
-                print("duration error")
-                return
-            }
+            guard let duration = self.playerAV.currentItem?.duration.seconds else { return }
             let revirsedTimer = duration - timer
             self.songTimerRight.text = " -\(String(revirsedTimer))"
         }
@@ -132,11 +134,11 @@ class PlayerView: UIView {
     
     private func gestureRecognizer() {
             let gest = UITapGestureRecognizer(target: self,
-                                           action: #selector(muveViewByGuewsure))
+                                           action: #selector(muveViewByGuewture))
             addGestureRecognizer(gest)
     }
     
-    @objc private func muveViewByGuewsure() {
+    @objc private func muveViewByGuewture() {
         if miniView.isHidden {
             self.backgroundColor = baseColor.withAlphaComponent(0.7)
             playerControlDelegate?.minimizePlayerView()
@@ -161,8 +163,12 @@ class PlayerView: UIView {
         miniImageView.sd_setImage(with: imageUrl, placeholderImage: plaseholderImage)
         trackImage.sd_setImage(with: imageUrl, placeholderImage: plaseholderImage, options: SDWebImageOptions(rawValue: 0), completed: { (image, error, cacheType, imageURL) in
             let image: UIImage = self.miniImageView.image!
-            self.baseColor = image.averageColor!.withAlphaComponent(0.98)
-            self.backgroundColor = self.baseColor
+            let backgroundColor: UIColor = image.averageColor!
+            self.baseColor = backgroundColor
+            self.backgroundColor = backgroundColor.withAlphaComponent(0.98)
+            if !self.miniView.isHidden {
+                self.backgroundColor = backgroundColor.withAlphaComponent(0.7)
+            }
            })
         guard let previewUrl = info.previewUrl else { return }
         playSong(from: previewUrl)
