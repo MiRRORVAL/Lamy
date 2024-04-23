@@ -76,7 +76,7 @@ class PlayerView: UIView {
         setupView(with: track)
     }
 
-    @IBAction func playButtonePressed(_ sender: Any) {
+    @IBAction func playButtonPressed(_ sender: Any) {
         playButtonSetup()
     }
 
@@ -87,9 +87,6 @@ class PlayerView: UIView {
         playerAV.volume = volumeSlider.value
     }
     
-    @IBAction func exitButtonePressed(_ sender: Any) {
-        playerControlDelegate?.minimizePlayerView()
-    }
     
     private func playButtonSetup() {
         if playerAV.timeControlStatus == .playing {
@@ -133,12 +130,12 @@ class PlayerView: UIView {
     }
     
     private func gestureRecognizer() {
-            let gest = UITapGestureRecognizer(target: self,
-                                           action: #selector(muveViewByGuewture))
-            addGestureRecognizer(gest)
+            let tap = UITapGestureRecognizer(target: self,
+                                           action: #selector(muveViewByTap))
+            addGestureRecognizer(tap)
     }
     
-    @objc private func muveViewByGuewture() {
+    @objc private func muveViewByTap() {
         if miniView.isHidden {
             self.backgroundColor = baseColor.withAlphaComponent(0.7)
             playerControlDelegate?.minimizePlayerView()

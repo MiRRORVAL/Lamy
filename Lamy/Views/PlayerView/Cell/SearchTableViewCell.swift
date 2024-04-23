@@ -11,6 +11,9 @@ import SDWebImage
 
 class SearchTableViewCell: UITableViewCell {
 
+    let dataMeneger = DataManager.shared
+    var correctTrack: Track?
+    
     @IBOutlet weak var songYearLable: UILabel!
     @IBOutlet weak var cellImage: UIImageView!
     @IBOutlet weak var cellArtistNameLable: UILabel!
@@ -46,10 +49,13 @@ class SearchTableViewCell: UITableViewCell {
             cellImage.sd_setImage(with: url, placeholderImage: image)
             cellImage.tintColor = .gray
         }
+        correctTrack = track
     }
     
     
-    @IBAction func cellAddButtonPressed(_ sender: Any) {
+    @IBAction func addToPlaylistButtonPressed(_ sender: Any) {
+        guard let correctTrack = correctTrack else { return }
+        dataMeneger.saveTrack(correctTrack)
     }
     
 }

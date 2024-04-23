@@ -44,7 +44,7 @@
                                             <state key="normal" title="Button"/>
                                             <buttonConfiguration key="configuration" style="plain" image="play.fill" catalog="system"/>
                                             <connections>
-                                                <action selector="playButtonePressed:" destination="snC-tJ-XEY" eventType="touchUpInside" id="atc-wx-Cjp"/>
+                                                <action selector="playButtonPressed:" destination="snC-tJ-XEY" eventType="touchUpInside" id="atc-wx-Cjp"/>
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="|" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ffy-pK-jNd">
@@ -70,7 +70,9 @@
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="6F5-Kd-0gW" secondAttribute="trailing" id="0vQ-Md-snT"/>
+                                <constraint firstItem="qf3-48-NEm" firstAttribute="top" secondItem="WBl-ip-CPc" secondAttribute="top" id="3mL-2u-UdY"/>
                                 <constraint firstAttribute="bottom" secondItem="6F5-Kd-0gW" secondAttribute="bottom" id="H5T-tm-aSJ"/>
+                                <constraint firstAttribute="bottom" secondItem="qf3-48-NEm" secondAttribute="bottom" id="fM0-4f-6yh"/>
                                 <constraint firstItem="6F5-Kd-0gW" firstAttribute="top" secondItem="WBl-ip-CPc" secondAttribute="top" id="fZp-CL-CBo"/>
                             </constraints>
                         </stackView>
@@ -173,7 +175,7 @@
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain" image="pause.fill" catalog="system"/>
                                     <connections>
-                                        <action selector="playButtonePressed:" destination="snC-tJ-XEY" eventType="touchUpInside" id="Lhi-CQ-Gzd"/>
+                                        <action selector="playButtonPressed:" destination="snC-tJ-XEY" eventType="touchUpInside" id="Lhi-CQ-Gzd"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ngB-NP-JFJ">

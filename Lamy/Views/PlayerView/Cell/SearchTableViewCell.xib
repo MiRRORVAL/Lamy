@@ -52,7 +52,7 @@
                             <imageReference key="image" image="plus.circle" catalog="system"/>
                         </buttonConfiguration>
                         <connections>
-                            <action selector="cellAddButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="305-Gh-BPx"/>
+                            <action selector="addToPlaylistButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="305-Gh-BPx"/>
                         </connections>
                     </button>
                 </subviews>

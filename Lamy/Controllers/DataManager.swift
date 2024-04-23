@@ -18,6 +18,7 @@ final class DataManager {
     private var limit = "&limit=50"
     
     var musicTracks: [ReceivedSearchItems] = []
+    var playlisTracks: [Track] = []
     
     func fetchData(for searchRequest: String, complitionHandler: @escaping () -> ()) {
         guard searchRequest != "" else {
@@ -45,6 +46,20 @@ final class DataManager {
         }
     }
     
-    private init() {}
+    func saveTrack(_ track: Track) {
+        playlisTracks.append(track)
+        guard !playlisTracks.isEmpty else { return }
+        guard let encoded = try? JSONEncoder().encode(playlisTracks) else { return }
+        UserDefaults.standard.set(encoded, forKey: "savedTracks")
+        print("Saved")
+    }
+    
+    func loadTracks() -> [Track]? {
+        guard let loadedEncodedTracks = UserDefaults.standard.object(forKey: "savedTracks") as? Data else { return nil}
+        guard let loadedTracks = try? JSONDecoder().decode([Track].self, from: loadedEncodedTracks) else { return nil}
+        playlisTracks = loadedTracks
+        return loadedTracks
+    }
+    
 }
 

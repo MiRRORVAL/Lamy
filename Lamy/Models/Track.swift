@@ -6,8 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
-struct Track {
+struct Track: Codable, Identifiable {
+    
+    var id = UUID()
+    
     var artistName: String
     var collectionName: String?
     var trackName: String

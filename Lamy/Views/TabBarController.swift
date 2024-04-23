@@ -6,17 +6,19 @@
 //
 
 import UIKit
+import SwiftUI
 
 class TabBarController: UITabBarController {
     
     private let searchViewController = SearchViewController()
-    private let library = ViewController()
+    private let library = PlaylistViewController()
     private var minimizedConstrain: NSLayoutConstraint!
     private var maximizedConstrain: NSLayoutConstraint!
     private var bottomConstrain: NSLayoutConstraint!
     private let playerView = Bundle.main.loadNibNamed("PlayerView",
                                                     owner: TabBarController.self,
                                                     options: nil)?.first as! PlayerView
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,21 +27,25 @@ class TabBarController: UITabBarController {
     }
     
     private func setupView() {
+        let playlist = PlaylistSwiftUIView()
+        let hostView = UIHostingController(rootView: playlist)
+        let navigatoinForSearch = UINavigationController(rootViewController: searchViewController)
+        let navigatoinForLibrary = UINavigationController(rootViewController: hostView)
+        
         view.backgroundColor = .white
         view.tintColor = .darkGray
         tabBar.backgroundColor = .white
-        let navigatoinForSearch = UINavigationController(rootViewController: searchViewController)
-        let navigatoinForLibrary = UINavigationController(rootViewController: library)
         navigatoinForSearch.navigationBar.backgroundColor = .white
+        
         navigatoinForSearch.visibleViewController?.title = "Find"
-        let leftImage = UIImage(systemName: "play.circle.fill")
+        let leftImage = UIImage(systemName: "magnifyingglass.circle.fill")
         navigatoinForSearch.tabBarItem.image = leftImage
         navigatoinForSearch.tabBarItem.title = "Find"
         navigatoinForSearch.navigationBar.prefersLargeTitles = true
-        navigatoinForLibrary.visibleViewController?.title = "Playlists"
-        let rightImage = UIImage(systemName: "heart.circle.fill")
+        navigatoinForLibrary.visibleViewController?.title = "Playlist"
+        let rightImage = UIImage(systemName: "play.circle.fill")
         navigatoinForLibrary.tabBarItem.image = rightImage
-        navigatoinForLibrary.tabBarItem.title = "Playlists"
+        navigatoinForLibrary.tabBarItem.title = "Playlist"
         navigatoinForLibrary.navigationBar.prefersLargeTitles = true
         let image = UIImage(systemName: "headphones.circle.fill")
         let imageView = UIImageView(image: image)
