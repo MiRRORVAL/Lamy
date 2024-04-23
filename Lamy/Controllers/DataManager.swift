@@ -51,12 +51,18 @@ final class DataManager {
         guard !playlisTracks.isEmpty else { return }
         guard let encoded = try? JSONEncoder().encode(playlisTracks) else { return }
         UserDefaults.standard.set(encoded, forKey: "savedTracks")
-        print("Saved")
+    }
+    
+    func delete(_ index: Int?) {
+        guard let index = index else { return }
+        playlisTracks.remove(at: index)
+        guard let encoded = try? JSONEncoder().encode(playlisTracks) else { return }
+        UserDefaults.standard.set(encoded, forKey: "savedTracks")
     }
     
     func loadTracks() -> [Track]? {
-        guard let loadedEncodedTracks = UserDefaults.standard.object(forKey: "savedTracks") as? Data else { return nil}
-        guard let loadedTracks = try? JSONDecoder().decode([Track].self, from: loadedEncodedTracks) else { return nil}
+        guard let loadedEncodedTracks = UserDefaults.standard.object(forKey: "savedTracks") as? Data else { return nil }
+        guard let loadedTracks = try? JSONDecoder().decode([Track].self, from: loadedEncodedTracks) else { return nil }
         playlisTracks = loadedTracks
         return loadedTracks
     }

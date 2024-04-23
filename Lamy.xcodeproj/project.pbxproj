@@ -22,6 +22,7 @@
 		51659B8C2BD78CD80047DA09 /* PlaylistSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51659B8B2BD78CD80047DA09 /* PlaylistSwiftUIView.swift */; };
 		516EBE2A2BC936C300AB9FE9 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516EBE292BC936C300AB9FE9 /* PlayerView.swift */; };
 		516EBE2C2BC936DA00AB9FE9 /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 516EBE2B2BC936DA00AB9FE9 /* PlayerView.xib */; };
+		517442582BD80B300072600B /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 517442572BD80B300072600B /* SDWebImageSwiftUI */; };
 		518AD9282BC7DA28003BE692 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 518AD9272BC7DA28003BE692 /* SDWebImage */; };
 		518AD92A2BC7DA28003BE692 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 518AD9292BC7DA28003BE692 /* SDWebImageMapKit */; };
 		518AD92D2BC7DCA8003BE692 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518AD92B2BC7DCA8003BE692 /* SearchTableViewCell.swift */; };
@@ -61,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				517442582BD80B300072600B /* SDWebImageSwiftUI in Frameworks */,
 				518AD9282BC7DA28003BE692 /* SDWebImage in Frameworks */,
 				496528402BC4408800961885 /* Alamofire in Frameworks */,
 				518AD92A2BC7DA28003BE692 /* SDWebImageMapKit in Frameworks */,
@@ -191,6 +193,7 @@
 				496528412BC4408800961885 /* AlamofireDynamic */,
 				518AD9272BC7DA28003BE692 /* SDWebImage */,
 				518AD9292BC7DA28003BE692 /* SDWebImageMapKit */,
+				517442572BD80B300072600B /* SDWebImageSwiftUI */,
 			);
 			productName = Lamy;
 			productReference = 4963ED0A2BC2D18D005F4C63 /* Lamy.app */;
@@ -223,6 +226,7 @@
 			packageReferences = (
 				4965283E2BC4408800961885 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				518AD9262BC7DA28003BE692 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				517442562BD80B300072600B /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = 4963ED0B2BC2D18D005F4C63 /* Products */;
 			projectDirPath = "";
@@ -487,6 +491,14 @@
 				minimumVersion = 5.9.1;
 			};
 		};
+		517442562BD80B300072600B /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.2;
+			};
+		};
 		518AD9262BC7DA28003BE692 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
@@ -507,6 +519,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4965283E2BC4408800961885 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = AlamofireDynamic;
+		};
+		517442572BD80B300072600B /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 517442562BD80B300072600B /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
 		};
 		518AD9272BC7DA28003BE692 /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
