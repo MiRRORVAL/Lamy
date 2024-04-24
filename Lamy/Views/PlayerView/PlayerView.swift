@@ -29,7 +29,7 @@ class PlayerView: UIView {
     @IBOutlet weak var trackImage: UIImageView!
     @IBOutlet weak var miniButtonsStackView: UIStackView!
     
-    weak var delegate: TransferInfoToPlayerViewProtocol?
+    var delegate: TransferInfoToPlayerViewProtocol?
     weak var playerControlDelegate: PlayerViewControlProtocol?
     var baseColor: UIColor!
     
@@ -137,14 +137,13 @@ class PlayerView: UIView {
     
     @objc private func muveViewByTap() {
         if miniView.isHidden {
-            self.backgroundColor = baseColor.withAlphaComponent(0.7)
+            self.backgroundColor = baseColor.withAlphaComponent(0.8)
             playerControlDelegate?.minimizePlayerView()
         } else {
             self.backgroundColor = baseColor.withAlphaComponent(0.98)
             playerControlDelegate?.maximizePlayerView(play: nil)
         }
     }
-    
     
     func setupView(with info: Track) {
         songAuthor.text = info.artistName
@@ -164,7 +163,7 @@ class PlayerView: UIView {
             self.baseColor = backgroundColor
             self.backgroundColor = backgroundColor.withAlphaComponent(0.98)
             if !self.miniView.isHidden {
-                self.backgroundColor = backgroundColor.withAlphaComponent(0.7)
+                self.backgroundColor = backgroundColor.withAlphaComponent(0.8)
             }
            })
         guard let previewUrl = info.previewUrl else { return }

@@ -8,6 +8,9 @@
 import Foundation
 
 protocol PlayerViewControlProtocol: AnyObject {
+    
+    func setPlayerViewDelegate(asPlaylist: Bool)
+    
     func minimizePlayerView()
     func maximizePlayerView(play track: Track?)
 }

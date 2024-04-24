@@ -13,12 +13,16 @@ struct PlaylistSwiftUIView: View {
     
     
     @State var playlistTracks = DataManager.shared.loadTracks()
-
+    let dataManager = DataManager.shared
+    var delegate: PlayerViewControlProtocol?
+    static var pointer: Int = 0
+    
     var body: some View {
         VStack {
                 GeometryReader(content: { geometry in
                         Button(action: {
-                            print("HI")
+                            delegate?.setPlayerViewDelegate(asPlaylist: true)
+                            delegate?.maximizePlayerView(play: playlistTracks?.first)
                         },
                                label: {
                             Image(systemName: "play")
@@ -33,7 +37,10 @@ struct PlaylistSwiftUIView: View {
                 Divider().padding(.leading).padding(.trailing)
                 List {
                     ForEach(playlistTracks!) { track in
-                        PlaylistSwiftUIViewCell(track: track)
+                        PlaylistSwiftUIViewCell(track: track).onTapGesture {
+                            delegate?.setPlayerViewDelegate(asPlaylist: true)
+                            delegate?.maximizePlayerView(play: track)
+                        }
                     }.onDelete(perform: { indexSet in
                         DataManager.shared.delete(indexSet.first)
                         playlistTracks = DataManager.shared.loadTracks()
@@ -68,4 +75,19 @@ struct PlaylistSwiftUIViewCell: View {
             }.frame(height: 70)
     }
 }
-
+extension PlaylistSwiftUIView: TransferInfoToPlayerViewProtocol {
+    
+    func moveBack() -> Track? {
+        let count = dataManager.playlisTracks.count - 1
+        PlaylistSwiftUIView.pointer = PlaylistSwiftUIView.pointer - 1 < 0 ? count : PlaylistSwiftUIView.pointer - 1
+        let track = playlistTracks![PlaylistSwiftUIView.pointer]
+        return track
+    }
+    
+    func moveForward() -> Track? {
+        let count = dataManager.playlisTracks.count - 1
+        PlaylistSwiftUIView.pointer = PlaylistSwiftUIView.pointer + 1 > count ? 0 : PlaylistSwiftUIView.pointer + 1
+        let track = playlistTracks![PlaylistSwiftUIView.pointer]
+        return track
+    }
+}

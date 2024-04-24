@@ -19,6 +19,7 @@ class SearchViewController: UITableViewController {
         setupSearchController()
         let nib = UINib(nibName: "SearchTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "reuseIdentifier")
+         
     }
 
     // MARK: - Table view data source
@@ -58,6 +59,7 @@ class SearchViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let track = makeTrack(nextIndexPath: indexPath)
+        tabBarDelegate?.setPlayerViewDelegate(asPlaylist: false)
         tabBarDelegate?.maximizePlayerView(play: track)
     }
     

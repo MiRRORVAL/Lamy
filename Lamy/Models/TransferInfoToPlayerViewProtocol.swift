@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol TransferInfoToPlayerViewProtocol: AnyObject {
+protocol TransferInfoToPlayerViewProtocol {
     func moveBack() -> Track?
     func moveForward() -> Track?
 }

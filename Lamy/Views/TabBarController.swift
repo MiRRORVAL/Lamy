@@ -18,21 +18,23 @@ class TabBarController: UITabBarController {
     private let playerView = Bundle.main.loadNibNamed("PlayerView",
                                                     owner: TabBarController.self,
                                                     options: nil)?.first as! PlayerView
-
+    var playlist = PlaylistSwiftUIView()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         setupPlayer()
+        self.hideKeyboardWhenTappedAround()
     }
     
     private func setupView() {
-        let playlist = PlaylistSwiftUIView()
+        playlist.delegate = self
         let hostView = UIHostingController(rootView: playlist)
         let navigatoinForSearch = UINavigationController(rootViewController: searchViewController)
         let navigatoinForLibrary = UINavigationController(rootViewController: hostView)
         
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         view.tintColor = .darkGray
         tabBar.backgroundColor = .white
         navigatoinForSearch.navigationBar.backgroundColor = .white
@@ -47,8 +49,8 @@ class TabBarController: UITabBarController {
         navigatoinForLibrary.tabBarItem.image = rightImage
         navigatoinForLibrary.tabBarItem.title = "Playlist"
         navigatoinForLibrary.navigationBar.prefersLargeTitles = true
-        let image = UIImage(systemName: "headphones.circle.fill")
-        let imageView = UIImageView(image: image)
+        let backgroundImage = UIImage(systemName: "headphones.circle.fill")
+        let imageView = UIImageView(image: backgroundImage)
         let screenSize = UIScreen.main.bounds
         imageView.frame = CGRect(x: 0 ,
                                  y: (screenSize.midY + 100) / 2,
@@ -64,8 +66,8 @@ class TabBarController: UITabBarController {
     
     private func setupPlayer() {
         playerView.playerControlDelegate = self
-        playerView.delegate = searchViewController
         searchViewController.tabBarDelegate = self
+        
         playerView.translatesAutoresizingMaskIntoConstraints = false
         maximizedConstrain = playerView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height)
         minimizedConstrain = playerView.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -70)
@@ -78,6 +80,15 @@ class TabBarController: UITabBarController {
 }
 
 extension TabBarController: PlayerViewControlProtocol {
+    
+    func setPlayerViewDelegate(asPlaylist: Bool) {
+        if asPlaylist {
+            playerView.delegate = playlist
+        } else {
+            playerView.delegate = searchViewController
+        }
+    }
+    
     func minimizePlayerView() {
         self.tabBar.transform = CGAffineTransform(scaleX: 1, y: 1)
         playerView.miniView.isHidden = false
@@ -95,7 +106,6 @@ extension TabBarController: PlayerViewControlProtocol {
             },
                            completion: nil)
         }
-        
     
     func maximizePlayerView(play track: Track?) {
         self.tabBar.transform = CGAffineTransform(scaleX: 0, y: 0.01)
@@ -118,5 +128,17 @@ extension TabBarController: PlayerViewControlProtocol {
         guard let track = track else { return }
         playerView.setupView(with: track)
         
+    }
+}
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
